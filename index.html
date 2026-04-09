@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LinkedInify — Speak Professional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Syne:wght@400;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0c10;
+  --surface:#13131a;
+  --surface2:#1c1c26;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --text:#f0ede6;
+  --text2:#9a9aaa;
+  --text3:#5a5a6a;
+  --accent:#0a66c2;
+  --accent-glow:rgba(10,102,194,0.25);
+  --gold:#d4a847;
+  --gold-light:#f5d98a;
+  --green:#22c55e;
+  --red:#ef4444;
+  --radius:14px;
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:2px}
+
+/* NOISE */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;mix-blend-mode:screen}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:18px 48px;border-bottom:1px solid var(--border);background:rgba(12,12,16,0.85);backdrop-filter:blur(20px)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--text);letter-spacing:-0.01em;display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent)}
+.nav-links{display:flex;align-items:center;gap:6px}
+.nav-link{font-size:0.8rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text2);padding:8px 14px;border-radius:8px;cursor:pointer;border:none;background:transparent;transition:all 0.2s}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--surface2)}
+.nav-cta{font-size:0.8rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:#fff;padding:8px 18px;border-radius:8px;cursor:pointer;border:none;background:var(--accent);transition:all 0.2s;box-shadow:0 0 20px var(--accent-glow)}
+.nav-cta:hover{background:#0857a8;box-shadow:0 0 32px var(--accent-glow)}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:72px}
+.page.active{display:block}
+
+/* =============== LANDING PAGE =============== */
+#page-home{}
+
+/* HERO */
+.hero{
+  min-height:calc(100vh - 72px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(10,102,194,0.15) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 40% at 80% 60%,rgba(212,168,71,0.06) 0%,transparent 60%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 70%);
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(212,168,71,0.3);
+  padding:7px 16px;border-radius:40px;margin-bottom:28px;position:relative;z-index:1;
+  background:rgba(212,168,71,0.06);
+}
+.hero-eyebrow::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(1.5)}}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,5.5rem);font-weight:900;line-height:1.0;
+  letter-spacing:-0.02em;
+  margin-bottom:20px;position:relative;z-index:1;
+  background:linear-gradient(135deg,#f0ede6 30%,#9a9aaa 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{font-size:1.1rem;font-weight:400;color:var(--text2);max-width:520px;line-height:1.75;margin-bottom:44px;position:relative;z-index:1;font-family:'Lora',serif;font-style:italic}
+.hero-cta-row{display:flex;align-items:center;gap:12px;position:relative;z-index:1;flex-wrap:wrap;justify-content:center;margin-bottom:72px}
+.btn-primary{font-size:0.9rem;font-weight:700;letter-spacing:0.04em;color:#fff;padding:14px 28px;border-radius:10px;cursor:pointer;border:none;background:var(--accent);transition:all 0.2s;box-shadow:0 0 28px var(--accent-glow);display:flex;align-items:center;gap:8px}
+.btn-primary:hover{background:#085aad;transform:translateY(-2px);box-shadow:0 8px 40px var(--accent-glow)}
+.btn-secondary{font-size:0.9rem;font-weight:600;color:var(--text2);padding:14px 28px;border-radius:10px;cursor:pointer;border:1px solid var(--border2);background:transparent;transition:all 0.2s}
+.btn-secondary:hover{color:var(--text);border-color:var(--border2);background:var(--surface)}
+
+/* STATS */
+.hero-stats{display:flex;gap:40px;position:relative;z-index:1;flex-wrap:wrap;justify-content:center}
+.stat-item{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--text);line-height:1}
+.stat-num span{font-size:1.2rem;color:var(--gold)}
+.stat-label{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-top:4px}
+
+/* BEFORE AFTER */
+.ba-section{padding:80px 24px;max-width:900px;margin:0 auto}
+.section-label{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';width:24px;height:1px;background:var(--gold)}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;margin-bottom:48px;line-height:1.2}
+.ba-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.ba-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.ba-card.before{border-color:rgba(239,68,68,0.2)}
+.ba-card.after{border-color:rgba(10,102,194,0.3);background:rgba(10,102,194,0.05)}
+.ba-tag{font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:12px}
+.ba-tag.before-tag{background:rgba(239,68,68,0.15);color:#f87171}
+.ba-tag.after-tag{background:rgba(10,102,194,0.15);color:#60a5fa}
+.ba-text{font-size:0.9rem;line-height:1.65;color:var(--text2)}
+.ba-text.good{color:var(--text);font-weight:500}
+.ba-arrow{color:var(--gold);font-size:1.5rem}
+
+/* TOOLS GRID */
+.tools-section{padding:80px 24px;max-width:900px;margin:0 auto}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.tool-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;cursor:pointer;transition:all 0.25s;
+  display:flex;flex-direction:column;gap:12px;
+}
+.tool-card:hover{border-color:var(--border2);background:var(--surface2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.tool-card.featured{border-color:rgba(10,102,194,0.4);background:rgba(10,102,194,0.06)}
+.tool-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:var(--surface2)}
+.tool-card.featured .tool-icon{background:rgba(10,102,194,0.2)}
+.tool-name{font-size:0.95rem;font-weight:700;color:var(--text)}
+.tool-desc{font-size:0.8rem;color:var(--text2);line-height:1.6;font-family:'Lora',serif;font-style:italic}
+.tool-badge{font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);background:rgba(212,168,71,0.1);padding:3px 8px;border-radius:4px;align-self:flex-start}
+
+/* HOW IT WORKS */
+.how-section{padding:80px 24px;max-width:760px;margin:0 auto}
+.steps{display:grid;gap:0}
+.step{display:grid;grid-template-columns:48px 1fr;gap:20px;padding:28px 0;border-bottom:1px solid var(--border);position:relative}
+.step:last-child{border-bottom:none}
+.step-num{width:44px;height:44px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--text2);flex-shrink:0;margin-top:2px}
+.step.done .step-num{border-color:var(--gold);color:var(--gold);background:rgba(212,168,71,0.08)}
+.step-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.step-desc{font-size:0.85rem;color:var(--text2);line-height:1.65;font-family:'Lora',serif}
+
+/* =============== APP PAGE =============== */
+#page-app{background:var(--bg)}
+.app-layout{max-width:1080px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:220px 1fr;gap:24px}
+@media(max-width:720px){.app-layout{grid-template-columns:1fr}}
+
+/* SIDEBAR */
+.sidebar{display:flex;flex-direction:column;gap:6px;position:sticky;top:92px;align-self:start}
+.sidebar-label{font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);padding:8px 12px;margin-top:12px}
+.sidebar-label:first-child{margin-top:0}
+.tool-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;border:none;background:transparent;color:var(--text2);font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;transition:all 0.2s;width:100%;text-align:left}
+.tool-btn:hover{background:var(--surface);color:var(--text)}
+.tool-btn.active{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.tool-btn .t-icon{font-size:1rem;width:24px;text-align:center;flex-shrink:0}
+
+/* HISTORY sidebar section */
+.history-list{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow-y:auto}
+.history-item{padding:8px 12px;border-radius:8px;cursor:pointer;border:none;background:transparent;color:var(--text3);font-family:'Syne',sans-serif;font-size:0.75rem;transition:all 0.2s;text-align:left;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.history-item:hover{background:var(--surface);color:var(--text2)}
+.history-empty{font-size:0.75rem;color:var(--text3);padding:8px 12px;font-style:italic}
+
+/* TOOL PANEL */
+.tool-panel{display:none}
+.tool-panel.active{display:block}
+.panel-header{margin-bottom:28px}
+.panel-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.panel-desc{font-size:0.85rem;color:var(--text2);font-family:'Lora',serif;font-style:italic;line-height:1.6}
+
+/* FORM ELEMENTS */
+.form-group{margin-bottom:18px}
+.form-label{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.form-label .hint{font-size:0.65rem;font-weight:400;letter-spacing:0;text-transform:none;color:var(--text3);font-style:italic}
+textarea,select,input[type=text]{
+  width:100%;padding:13px 16px;
+  font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--text);
+  background:var(--surface);border:1px solid var(--border2);border-radius:10px;
+  outline:none;resize:vertical;transition:border-color 0.2s;
+  appearance:none;
+}
+textarea:focus,select:focus,input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+textarea::placeholder,input::placeholder{color:var(--text3)}
+select option{background:var(--surface2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+
+/* ACTION BAR */
+.action-bar{display:flex;align-items:center;gap:10px;margin-top:6px}
+.btn-run{
+  flex:1;padding:13px 20px;border:none;border-radius:10px;
+  background:var(--accent);color:#fff;
+  font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;letter-spacing:0.04em;
+  cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 20px var(--accent-glow);
+}
+.btn-run:hover:not(:disabled){background:#0857a8;transform:translateY(-1px);box-shadow:0 8px 32px var(--accent-glow)}
+.btn-run:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.spinner{width:15px;height:15px;border:2px solid rgba(255,255,255,0.25);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.btn-clear{padding:13px 16px;border:1px solid var(--border2);border-radius:10px;background:transparent;color:var(--text2);cursor:pointer;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:600;transition:all 0.2s}
+.btn-clear:hover{color:var(--text);background:var(--surface)}
+
+/* RESULTS */
+.results-area{margin-top:24px}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.results-title{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text2)}
+.results-time{font-size:0.72rem;color:var(--text3)}
+
+/* RESULT CARDS */
+.result-cards{display:flex;flex-direction:column;gap:12px}
+.r-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;transition:border-color 0.2s;
+  animation:fadeUp 0.35s ease both;
+}
+.r-card:nth-child(1){animation-delay:0.04s}
+.r-card:nth-child(2){animation-delay:0.12s}
+.r-card:nth-child(3){animation-delay:0.2s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.r-card:hover{border-color:var(--border2)}
+.r-card.highlight{border-color:rgba(212,168,71,0.3);background:rgba(212,168,71,0.03)}
+.r-card-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
+.r-level{display:flex;align-items:center;gap:6px;font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:5px}
+.r-level.basic{background:rgba(255,255,255,0.05);color:#888}
+.r-level.pro{background:rgba(10,102,194,0.12);color:#60a5fa}
+.r-level.wow{background:rgba(212,168,71,0.1);color:var(--gold)}
+.r-actions{display:flex;gap:6px}
+.r-copy-btn,.r-save-btn{
+  font-size:0.72rem;font-weight:600;color:var(--text3);
+  background:none;border:1px solid var(--border);padding:4px 10px;border-radius:6px;cursor:pointer;
+  transition:all 0.15s;display:flex;align-items:center;gap:4px;
+}
+.r-copy-btn:hover{border-color:var(--accent);color:#60a5fa}
+.r-save-btn:hover{border-color:var(--gold);color:var(--gold)}
+.r-copy-btn.ok,.r-save-btn.ok{border-color:var(--green);color:var(--green)}
+.r-body{padding:16px}
+.r-main{font-size:0.92rem;line-height:1.7;color:var(--text);margin-bottom:12px;padding-left:16px;position:relative}
+.r-main::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;background:var(--accent);border-radius:50%}
+.r-explain{font-size:0.78rem;line-height:1.6;color:var(--text2);background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:2px solid var(--border2)}
+.r-explain strong{color:var(--text);font-weight:600}
+
+/* SINGLE RESULT (About, Headline, etc) */
+.r-single{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;animation:fadeUp 0.35s ease both}
+.r-single-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.r-single-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text2)}
+.r-single-body{font-size:0.92rem;line-height:1.75;color:var(--text);white-space:pre-wrap}
+
+/* SCORE CARD */
+.score-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:28px;animation:fadeUp 0.35s ease both}
+.score-top{display:flex;align-items:center;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.score-circle{
+  width:110px;height:110px;border-radius:50%;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:conic-gradient(var(--accent) 0deg,var(--accent) calc(var(--pct)*3.6deg),var(--surface2) calc(var(--pct)*3.6deg));
+  position:relative;
+}
+.score-circle::after{content:'';position:absolute;inset:10px;background:var(--surface);border-radius:50%}
+.score-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--text);position:relative;z-index:1}
+.score-denom{font-size:0.7rem;color:var(--text2);position:relative;z-index:1}
+.score-grade{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold)}
+.score-summary{font-size:0.9rem;color:var(--text2);line-height:1.65;flex:1;font-family:'Lora',serif;font-style:italic}
+.score-items{display:flex;flex-direction:column;gap:12px}
+.score-row{display:flex;align-items:center;gap:12px}
+.score-row-label{font-size:0.78rem;font-weight:600;color:var(--text2);width:160px;flex-shrink:0}
+.score-bar-track{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+.score-bar-fill.high{background:var(--green)}
+.score-bar-fill.mid{background:var(--gold)}
+.score-bar-fill.low{background:var(--red)}
+.score-row-val{font-size:0.75rem;font-weight:700;color:var(--text2);width:30px;text-align:right}
+
+/* TIPS ROW */
+.tips-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.tip-chip{font-size:0.72rem;color:var(--text2);background:var(--surface2);padding:5px 10px;border-radius:6px;border:1px solid var(--border)}
+
+/* EXAMPLE CHIPS */
+.examples-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ex-chip{font-size:0.75rem;color:var(--text2);background:var(--surface);border:1px solid var(--border);padding:6px 12px;border-radius:20px;cursor:pointer;transition:all 0.15s}
+.ex-chip:hover{border-color:var(--accent);color:#60a5fa;background:rgba(10,102,194,0.05)}
+
+/* ERROR */
+.err{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:12px 16px;border-radius:10px;font-size:0.82rem;margin-top:12px;display:none}
+.err.show{display:block}
+
+/* HISTORY PAGE */
+#page-history{padding:40px 24px}
+.history-page-inner{max-width:760px;margin:0 auto}
+.saved-grid{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.saved-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;display:flex;align-items:flex-start;gap:14px}
+.saved-card-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.saved-card-body{flex:1;min-width:0}
+.saved-card-tag{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.saved-card-text{font-size:0.88rem;color:var(--text);line-height:1.6;margin-bottom:6px}
+.saved-card-time{font-size:0.7rem;color:var(--text3)}
+.saved-card-del{background:none;border:none;color:var(--text3);cursor:pointer;padding:4px;font-size:0.9rem;transition:color 0.15s;flex-shrink:0}
+.saved-card-del:hover{color:var(--red)}
+.empty-state{text-align:center;padding:60px 24px;color:var(--text3)}
+.empty-state-icon{font-size:3rem;margin-bottom:16px}
+.empty-state-text{font-size:0.9rem;font-family:'Lora',serif;font-style:italic}
+
+/* SCORE PAGE */
+#page-score{}
+
+/* RESPONSIVE */
+@media(max-width:720px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  .hero{padding:48px 16px 60px}
+  .ba-grid{grid-template-columns:1fr;gap:8px}
+  .ba-arrow{display:none}
+  .app-layout{padding:20px 16px}
+  .sidebar{position:static;flex-direction:row;flex-wrap:wrap;gap:6px}
+  .sidebar-label{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <span class="nav-logo-dot"></span>
+    LinkedInify
+  </a>
+  <div class="nav-links">
+    <button class="nav-link active" id="nav-home" onclick="showPage('home')">Home</button>
+    <button class="nav-link" id="nav-app" onclick="showPage('app')">Tools</button>
+    <button class="nav-link" id="nav-history" onclick="showPage('history')">Saved</button>
+  </div>
+  <button class="nav-cta" onclick="showPage('app')">Start Now →</button>
+</nav>
+
+<!-- ============ HOME PAGE ============ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">🇻🇳 Dành cho Gen Z Việt Nam</div>
+    <h1>Nói thường.<br/><em>Nghe professional.</em></h1>
+    <p class="hero-sub">Biến tiếng Việt thường ngày thành LinkedIn English chuẩn chỉnh — không cần biết viết, không cần native speaker.</p>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="showPage('app')">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 8l6 6M4 14l6-6 2-2M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
+        Dùng miễn phí ngay
+      </button>
+      <button class="btn-secondary" onclick="scrollToBa()">Xem ví dụ ↓</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num" id="cnt1">0<span>+</span></div><div class="stat-label">Users dùng thử</div></div>
+      <div class="stat-item"><div class="stat-num" id="cnt2">0<span>+</span></div><div class="stat-label">Bullets đã tạo</div></div>
+      <div class="stat-item"><div class="stat-num" id="cnt3">0<span>x</span></div><div class="stat-label">Tăng response rate</div></div>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="ba-section" id="ba-section">
+    <div class="section-label">Before / After</div>
+    <div class="section-title">Cùng một việc,<br/>khác hoàn toàn trên LinkedIn.</div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <span class="ba-tag before-tag">❌ Bình thường</span>
+          <p class="ba-text">"Tôi hay fix bug cho team và giúp đỡ mấy bạn junior khi họ gặp vấn đề"</p>
+        </div>
+        <div class="ba-arrow" style="text-align:center">→</div>
+        <div class="ba-card after">
+          <span class="ba-tag after-tag">✦ LinkedIn-ready</span>
+          <p class="ba-text good">"Resolved 40+ critical bugs and mentored 3 junior engineers, improving team velocity by ~25%"</p>
+        </div>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <span class="ba-tag before-tag">❌ Bình thường</span>
+          <p class="ba-text">"Chạy TikTok cho quán cà phê của gia đình, tự edit video, tăng follower lên nhiều hơn"</p>
+        </div>
+        <div class="ba-arrow" style="text-align:center">→</div>
+        <div class="ba-card after">
+          <span class="ba-tag after-tag">✦ LinkedIn-ready</span>
+          <p class="ba-text good">"Grew family F&B brand from 200 to 2,000 TikTok followers in 4 months through organic short-form content strategy"</p>
+        </div>
+      </div>
+      <div class="ba-grid">
+        <div class="ba-card before">
+          <span class="ba-tag before-tag">❌ Bình thường</span>
+          <p class="ba-text">"Làm báo cáo Excel cho sếp mỗi tháng xem doanh thu có ổn không"</p>
+        </div>
+        <div class="ba-arrow" style="text-align:center">→</div>
+        <div class="ba-card after">
+          <span class="ba-tag after-tag">✦ LinkedIn-ready</span>
+          <p class="ba-text good">"Delivered monthly revenue analytics dashboards in Excel, identifying 3 anomalies that informed pricing decisions"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLS OVERVIEW -->
+  <section class="tools-section">
+    <div class="section-label">5 Tools</div>
+    <div class="section-title">Tất cả những gì bạn cần<br/>để có hồ sơ ấn tượng.</div>
+    <div class="tools-grid">
+      <div class="tool-card featured" onclick="openTool('experience')">
+        <div class="tool-icon">🔄</div>
+        <div>
+          <div class="tool-badge">Phổ biến nhất</div>
+          <div class="tool-name">Experience Translator</div>
+          <div class="tool-desc">Dịch mô tả công việc / thực tập thành 3 mức LinkedIn bullet.</div>
+        </div>
+      </div>
+      <div class="tool-card" onclick="openTool('headline')">
+        <div class="tool-icon">✏️</div>
+        <div>
+          <div class="tool-name">Headline Generator</div>
+          <div class="tool-desc">Từ "sinh viên năm 4" thành headline thu hút recruiter.</div>
+        </div>
+      </div>
+      <div class="tool-card" onclick="openTool('about')">
+        <div class="tool-icon">📝</div>
+        <div>
+          <div class="tool-name">About Me Writer</div>
+          <div class="tool-desc">Tự giới thiệu nghe personal nhưng vẫn professional.</div>
+        </div>
+      </div>
+      <div class="tool-card" onclick="openTool('skills')">
+        <div class="tool-icon">⚡</div>
+        <div>
+          <div class="tool-name">Skills Optimizer</div>
+          <div class="tool-desc">Biến list kỹ năng thô thành keyword-rich skills section.</div>
+        </div>
+      </div>
+      <div class="tool-card" onclick="openTool('dm')">
+        <div class="tool-icon">💬</div>
+        <div>
+          <div class="tool-name">Cold DM Helper</div>
+          <div class="tool-desc">Viết tin nhắn LinkedIn đến recruiter không bị ignore.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="section-label">Cách hoạt động</div>
+    <div class="section-title">Đơn giản đến mức<br/>không cần hướng dẫn.</div>
+    <div class="steps">
+      <div class="step done">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-title">Gõ tiếng Việt thường ngày</div>
+          <div class="step-desc">Không cần chuẩn bị, không cần formal. Cứ viết như kể chuyện cho bạn bè nghe.</div>
+        </div>
+      </div>
+      <div class="step done">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-title">AI hiểu context của bạn</div>
+          <div class="step-desc">LinkedInify không chỉ dịch chữ — nó hiểu bạn đang làm gì và frame nó đúng cách cho từng ngành.</div>
+        </div>
+      </div>
+      <div class="step done">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-title">Nhận 3 phiên bản + giải thích</div>
+          <div class="step-desc">Basic, Professional, Impressive — cùng với giải thích tiếng Việt tại sao mỗi cái lại hay hơn. Bạn học được, không chỉ copy.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-title">Copy, paste, done ✓</div>
+          <div class="step-desc">Lưu lại các kết quả yêu thích, xem lịch sử, và cập nhật LinkedIn trong vòng vài phút.</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:40px;text-align:center">
+      <button class="btn-primary" onclick="showPage('app')" style="display:inline-flex">Bắt đầu ngay — miễn phí →</button>
+    </div>
+  </section>
+
+</div><!-- end home -->
+
+<!-- ============ APP PAGE ============ -->
+<div class="page" id="page-app">
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Tools</div>
+      <button class="tool-btn active" id="tb-experience" onclick="switchTool('experience')"><span class="t-icon">🔄</span>Experience</button>
+      <button class="tool-btn" id="tb-headline" onclick="switchTool('headline')"><span class="t-icon">✏️</span>Headline</button>
+      <button class="tool-btn" id="tb-about" onclick="switchTool('about')"><span class="t-icon">📝</span>About Me</button>
+      <button class="tool-btn" id="tb-skills" onclick="switchTool('skills')"><span class="t-icon">⚡</span>Skills</button>
+      <button class="tool-btn" id="tb-dm" onclick="switchTool('dm')"><span class="t-icon">💬</span>Cold DM</button>
+      <div class="sidebar-label">Đã lưu gần đây</div>
+      <div class="history-list" id="sidebarHistory">
+        <span class="history-empty">Chưa có kết quả nào được lưu.</span>
+      </div>
+    </aside>
+
+    <!-- PANELS -->
+    <main>
+
+      <!-- EXPERIENCE -->
+      <div class="tool-panel active" id="panel-experience">
+        <div class="panel-header">
+          <div class="panel-title">Experience Translator</div>
+          <div class="panel-desc">Mô tả công việc / thực tập bằng tiếng Việt → 3 cấp độ LinkedIn bullet với giải thích.</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Mô tả của bạn <span class="hint">Tiếng Việt, càng chi tiết càng tốt</span></div>
+          <textarea id="exp-input" rows="5" placeholder="VD: Tôi làm intern backend 3 tháng ở công ty fintech, viết API bằng Python/Django, fix bug, thỉnh thoảng review code cho junior..."></textarea>
+          <div class="examples-row">
+            <span class="ex-chip" onclick="setInput('exp-input','Tôi làm intern backend ở công ty fintech 3 tháng, viết API bằng Python/Django, fix bug, thỉnh thoảng review code cho junior khác')">🛠 Backend intern</span>
+            <span class="ex-chip" onclick="setInput('exp-input','Làm báo cáo doanh thu hàng tháng trên Excel, nhìn data tìm điểm bất thường, báo cáo lên sếp')">📊 Data báo cáo</span>
+            <span class="ex-chip" onclick="setInput('exp-input','Chạy Facebook và TikTok cho quán cà phê gia đình, tự viết content, edit video, tăng từ 200 lên 2000 follower trong 4 tháng')">📱 Social media</span>
+            <span class="ex-chip" onclick="setInput('exp-input','Design UI cho app mobile của team bằng Figma, user test với bạn trong trường xem có dễ dùng không')">🎨 UI Design</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Vai trò</div>
+            <select id="exp-role">
+              <option value="">-- Chọn vai trò --</option>
+              <option>Software Engineer Intern</option>
+              <option>Backend Developer</option>
+              <option>Frontend Developer</option>
+              <option>Full-stack Developer</option>
+              <option>Data Analyst</option>
+              <option>Product Manager</option>
+              <option>Marketing Intern</option>
+              <option>Business Analyst</option>
+              <option>UX/UI Designer</option>
+              <option>Content Creator</option>
+              <option>Sales Intern</option>
+              <option>Operations Intern</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Ngành / Công ty</div>
+            <input type="text" id="exp-industry" placeholder="VD: Fintech, E-commerce, FPT..."/>
+          </div>
+        </div>
+        <div class="action-bar">
+          <button class="btn-run" id="exp-btn" onclick="runExperience()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 8l6 6M4 14l6-6 2-2M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
+            Translate
+          </button>
+          <button class="btn-clear" onclick="clearPanel('experience')">Clear</button>
+        </div>
+        <div class="err" id="exp-err">⚠️ Có lỗi xảy ra. Thử lại nhé.</div>
+        <div class="results-area" id="exp-results" style="display:none">
+          <div class="results-header">
+            <span class="results-title">Kết quả</span>
+            <span class="results-time" id="exp-time"></span>
+          </div>
+          <div class="result-cards" id="exp-cards"></div>
+        </div>
+      </div>
+
+      <!-- HEADLINE -->
+      <div class="tool-panel" id="panel-headline">
+        <div class="panel-header">
+          <div class="panel-title">Headline Generator</div>
+          <div class="panel-desc">LinkedIn Headline là dòng đầu tiên recruiter nhìn thấy. Làm cho nó đáng nhớ.</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Bạn đang là ai? <span class="hint">Mô tả ngắn gọn</span></div>
+          <textarea id="hl-input" rows="3" placeholder="VD: Sinh viên năm 4 CNTT, đang tìm intern backend. Biết Python, Java, đã làm 2 project cá nhân về web app..."></textarea>
+          <div class="examples-row">
+            <span class="ex-chip" onclick="setInput('hl-input','Sinh viên năm 4 CNTT HUST, tìm intern backend. Biết Python, Django, đã làm project web app quản lý sinh viên')">👨‍💻 SV IT tìm intern</span>
+            <span class="ex-chip" onclick="setInput('hl-input','Fresh graduate marketing, đã từng chạy social media cho 2 thương hiệu F&B nhỏ, đam mê content và data')">📣 Marketing fresher</span>
+            <span class="ex-chip" onclick="setInput('hl-input','Đang học năm 3 kinh tế, tự học Excel và SQL, muốn làm data analyst, đã có chứng chỉ Google Data Analytics')">📈 Data wannabe</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Target role</div>
+            <input type="text" id="hl-role" placeholder="VD: Backend Intern, Data Analyst..."/>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Tone</div>
+            <select id="hl-tone">
+              <option value="professional">Professional</option>
+              <option value="creative">Creative & Bold</option>
+              <option value="technical">Technical</option>
+              <option value="storytelling">Storytelling</option>
+            </select>
+          </div>
+        </div>
+        <div class="action-bar">
+          <button class="btn-run" id="hl-btn" onclick="runHeadline()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Generate Headlines
+          </button>
+          <button class="btn-clear" onclick="clearPanel('headline')">Clear</button>
+        </div>
+        <div class="err" id="hl-err">⚠️ Có lỗi xảy ra. Thử lại nhé.</div>
+        <div class="results-area" id="hl-results" style="display:none">
+          <div class="results-header"><span class="results-title">3 Headline Variants</span><span class="results-time" id="hl-time"></span></div>
+          <div class="result-cards" id="hl-cards"></div>
+        </div>
+      </div>
+
+      <!-- ABOUT ME -->
+      <div class="tool-panel" id="panel-about">
+        <div class="panel-header">
+          <div class="panel-title">About Me Writer</div>
+          <div class="panel-desc">Viết phần "About" LinkedIn — vừa personal vừa professional, không quá formal cũng không quá casual.</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Kể về bản thân bạn <span class="hint">Tự do, không cần chuẩn bị</span></div>
+          <textarea id="ab-input" rows="6" placeholder="VD: Tôi là sinh viên năm 4 CNTT, thích làm web. Đã có 1 lần intern backend 3 tháng, tự học thêm React, hay làm project cá nhân vào cuối tuần. Đang tìm vị trí full-stack junior sau khi ra trường..."></textarea>
+          <div class="examples-row">
+            <span class="ex-chip" onclick="setInput('ab-input','Sinh viên năm 4 HUST ngành CNTT. Intern backend 3 tháng ở startup fintech, tự học React. Đam mê build product thật sự giải quyết vấn đề. Tìm fullstack junior sau tốt nghiệp tháng 6.')">💻 Dev student</span>
+            <span class="ex-chip" onclick="setInput('ab-input','Tốt nghiệp kinh tế 2024, tự học SQL và Tableau, đã làm freelance data report cho 3 SME. Thích tìm insight từ số liệu, muốn chuyển sang data analyst chính thức.')">📊 Career switcher</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Mục tiêu nghề nghiệp</div>
+            <input type="text" id="ab-goal" placeholder="VD: Tìm intern, fresher role, career switch..."/>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Độ dài</div>
+            <select id="ab-length">
+              <option value="short">Ngắn (~100 words)</option>
+              <option value="medium" selected>Vừa (~180 words)</option>
+              <option value="long">Dài (~280 words)</option>
+            </select>
+          </div>
+        </div>
+        <div class="action-bar">
+          <button class="btn-run" id="ab-btn" onclick="runAbout()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Write About Me
+          </button>
+          <button class="btn-clear" onclick="clearPanel('about')">Clear</button>
+        </div>
+        <div class="err" id="ab-err">⚠️ Có lỗi xảy ra. Thử lại nhé.</div>
+        <div class="results-area" id="ab-results" style="display:none">
+          <div class="result-cards" id="ab-cards"></div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="tool-panel" id="panel-skills">
+        <div class="panel-header">
+          <div class="panel-title">Skills Optimizer</div>
+          <div class="panel-desc">Nhập list kỹ năng thô → ra danh sách được sắp xếp theo mức độ quan trọng với recruiter, kèm ATS keywords.</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Kỹ năng của bạn <span class="hint">Liệt kê thoải mái, cách nhau bằng dấu phẩy</span></div>
+          <textarea id="sk-input" rows="4" placeholder="VD: Python, SQL cơ bản, Excel, Figma, làm việc nhóm, hay đi sự kiện tech, biết tiếng Anh đọc hiểu, đã học React 2 tháng..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Target role</div>
+            <input type="text" id="sk-role" placeholder="VD: Data Analyst, Frontend Dev..."/>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Ngành</div>
+            <input type="text" id="sk-industry" placeholder="VD: Fintech, E-commerce..."/>
+          </div>
+        </div>
+        <div class="action-bar">
+          <button class="btn-run" id="sk-btn" onclick="runSkills()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Optimize Skills
+          </button>
+          <button class="btn-clear" onclick="clearPanel('skills')">Clear</button>
+        </div>
+        <div class="err" id="sk-err">⚠️ Có lỗi xảy ra. Thử lại nhé.</div>
+        <div class="results-area" id="sk-results" style="display:none">
+          <div class="result-cards" id="sk-cards"></div>
+        </div>
+      </div>
+
+      <!-- COLD DM -->
+      <div class="tool-panel" id="panel-dm">
+        <div class="panel-header">
+          <div class="panel-title">Cold DM Helper</div>
+          <div class="panel-desc">Viết tin nhắn LinkedIn đến recruiter hoặc người bạn muốn kết nối — ngắn, tự nhiên, không bị ignore.</div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Tình huống của bạn</div>
+          <textarea id="dm-input" rows="4" placeholder="VD: Tôi muốn nhắn cho recruiter ở Shopee về vị trí Data Analyst intern. Tôi có background kinh tế, tự học SQL và Python, biết mình chưa có nhiều kinh nghiệm nhưng rất muốn thử..."></textarea>
+          <div class="examples-row">
+            <span class="ex-chip" onclick="setInput('dm-input','Muốn nhắn cho recruiter Shopee về vị trí Data Analyst intern. Background kinh tế, tự học SQL 3 tháng, chưa có kinh nghiệm chính thức nhưng có project cá nhân.')">🛍 Shopee intern</span>
+            <span class="ex-chip" onclick="setInput('dm-input','Muốn kết nối với senior developer ở VNG để hỏi về lộ trình backend developer, không muốn xin việc chỉ muốn hỏi thêm kinh nghiệm.')">🤝 Networking</span>
+            <span class="ex-chip" onclick="setInput('dm-input','Follow up sau khi đã nộp CV cho Tiki 2 tuần nhưng chưa thấy phản hồi, muốn hỏi lịch sự không bị coi là phiền.')">📬 Follow-up</span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <div class="form-label">Mục đích</div>
+            <select id="dm-purpose">
+              <option value="apply">Xin việc / Intern</option>
+              <option value="network">Kết nối / Networking</option>
+              <option value="followup">Follow-up sau nộp CV</option>
+              <option value="referral">Xin referral</option>
+              <option value="advice">Hỏi lời khuyên career</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Công ty target</div>
+            <input type="text" id="dm-company" placeholder="VD: Shopee, VNG, Tiki..."/>
+          </div>
+        </div>
+        <div class="action-bar">
+          <button class="btn-run" id="dm-btn" onclick="runDM()">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+            Write DM
+          </button>
+          <button class="btn-clear" onclick="clearPanel('dm')">Clear</button>
+        </div>
+        <div class="err" id="dm-err">⚠️ Có lỗi xảy ra. Thử lại nhé.</div>
+        <div class="results-area" id="dm-results" style="display:none">
+          <div class="result-cards" id="dm-cards"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ HISTORY PAGE ============ -->
+<div class="page" id="page-history">
+  <div class="history-page-inner">
+    <div class="panel-header">
+      <div class="panel-title">Đã lưu</div>
+      <div class="panel-desc">Những kết quả bạn đã star lại. Tất cả lưu trong session này.</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap">
+      <button class="btn-clear" onclick="clearAllSaved()" style="font-size:0.78rem;padding:8px 14px">🗑 Xoá tất cả</button>
+    </div>
+    <div class="saved-grid" id="savedGrid">
+      <div class="empty-state">
+        <div class="empty-state-icon">⭐</div>
+        <div class="empty-state-text">Chưa có gì được lưu. Dùng nút ★ ở bên kết quả để lưu lại những bullet bạn thích.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+let savedItems = [];
+let currentTool = 'experience';
+
+// ===== NAV =====
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(x=>x.classList.remove('active'));
+  const nl = document.getElementById('nav-'+p);
+  if(nl) nl.classList.add('active');
+  if(p==='history') renderSaved();
+}
+function openTool(tool){ showPage('app'); switchTool(tool); }
+function scrollToBa(){ document.getElementById('ba-section').scrollIntoView({behavior:'smooth'}); }
+
+// ===== TOOL SWITCH =====
+function switchTool(t) {
+  currentTool = t;
+  document.querySelectorAll('.tool-panel').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.tool-btn').forEach(x=>x.classList.remove('active'));
+  document.getElementById('panel-'+t).classList.add('active');
+  document.getElementById('tb-'+t).classList.add('active');
+}
+
+// ===== HELPERS =====
+function setInput(id, val){ document.getElementById(id).value = val; }
+function clearPanel(t){
+  const inputs = document.querySelectorAll(`#panel-${t} textarea, #panel-${t} input[type=text]`);
+  inputs.forEach(x=>x.value='');
+  const res = document.getElementById(t+'-results');
+  if(res) res.style.display='none';
+  const err = document.getElementById(t+'-err');
+  if(err) err.classList.remove('show');
+}
+function setLoading(id,on){
+  const btn = document.getElementById(id+'-btn');
+  if(on){ btn.disabled=true; btn.innerHTML=`<div class="spinner"></div> Đang xử lý...`; }
+  else {
+    btn.disabled=false;
+    const icons = {
+      exp:`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 8l6 6M4 14l6-6 2-2M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg> Translate`,
+      hl:`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Generate Headlines`,
+      ab:`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Write About Me`,
+      sk:`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Optimize Skills`,
+      dm:`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg> Write DM`,
+    };
+    btn.innerHTML = icons[id]||'Run';
+  }
+}
+async function callAPI(prompt){
+  const res = await fetch("/api/claude",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      messages:[{role:"user",content:prompt}]
+    })
+  });
+  const data = await res.json();
+  const text = data.content.map(b=>b.text||'').join('');
+  return JSON.parse(text.replace(/```json|```/g,'').trim());
+}
+function nowStr(){ return new Date().toLocaleTimeString('vi-VN'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ===== SAVE SYSTEM =====
+function saveItem(toolName, text){
+  savedItems.unshift({id:Date.now(), tool:toolName, text, time:nowStr()});
+  updateSidebarHistory();
+}
+function updateSidebarHistory(){
+  const el = document.getElementById('sidebarHistory');
+  if(savedItems.length===0){ el.innerHTML='<span class="history-empty">Chưa có kết quả nào.</span>'; return; }
+  el.innerHTML = savedItems.slice(0,8).map(i=>`<button class="history-item" title="${esc(i.text)}">${esc(i.text.substring(0,45))}...</button>`).join('');
+}
+function renderSaved(){
+  const g = document.getElementById('savedGrid');
+  if(savedItems.length===0){
+    g.innerHTML=`<div class="empty-state"><div class="empty-state-icon">⭐</div><div class="empty-state-text">Chưa có gì được lưu. Dùng nút ★ ở bên kết quả để lưu lại những bullet bạn thích.</div></div>`;
+    return;
+  }
+  const icons = {experience:'🔄',headline:'✏️',about:'📝',skills:'⚡',dm:'💬'};
+  g.innerHTML = savedItems.map((i,idx)=>`
+    <div class="saved-card">
+      <div class="saved-card-icon">${icons[i.tool]||'💾'}</div>
+      <div class="saved-card-body">
+        <div class="saved-card-tag">${i.tool.toUpperCase()}</div>
+        <div class="saved-card-text">${esc(i.text)}</div>
+        <div class="saved-card-time">${i.time}</div>
+      </div>
+      <button class="saved-card-del" onclick="deleteItem(${idx})" title="Xoá">✕</button>
+    </div>
+  `).join('');
+}
+function deleteItem(idx){ savedItems.splice(idx,1); renderSaved(); updateSidebarHistory(); }
+function clearAllSaved(){ savedItems=[]; renderSaved(); updateSidebarHistory(); }
+
+// Copy helper
+function copyText(btn, text){
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.classList.add('ok'); btn.textContent='✓ Copied';
+    setTimeout(()=>{ btn.classList.remove('ok'); btn.innerHTML='<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy'; },2000);
+  });
+}
+function saveBtn(btn, text, tool){
+  saveItem(tool, text);
+  btn.classList.add('ok'); btn.textContent='★ Saved';
+  setTimeout(()=>{ btn.classList.remove('ok'); btn.innerHTML='<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Save'; },2000);
+}
+
+function copyIcon(){ return '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'; }
+function saveIcon(){ return '<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'; }
+
+// ===== EXPERIENCE =====
+async function runExperience(){
+  const input = document.getElementById('exp-input').value.trim();
+  if(!input) return;
+  const role = document.getElementById('exp-role').value;
+  const industry = document.getElementById('exp-industry').value;
+  setLoading('exp',true);
+  document.getElementById('exp-err').classList.remove('show');
+  try {
+    const data = await callAPI(`You are a LinkedIn writing expert for Vietnamese Gen Z.
+Translate this work description into 3 LinkedIn bullet levels.
+Role: ${role||'not specified'}, Industry: ${industry||'not specified'}
+Description: "${input}"
+Return ONLY valid JSON:
+{"basic":{"bullet":"...","explanation":"...ngắn gọn tiếng Việt..."},"professional":{"bullet":"...","explanation":"..."},"impressive":{"bullet":"...","explanation":"..."}}
+Rules: past-tense action verb, under 25 words, add metrics, no "I", explanations in Vietnamese 1-2 sentences.`);
+    const cards = document.getElementById('exp-cards');
+    const levels = [
+      {key:'basic',label:'Basic',cls:'basic'},
+      {key:'professional',label:'Professional',cls:'pro'},
+      {key:'impressive',label:'Impressive ✦',cls:'wow'},
+    ];
+    cards.innerHTML = levels.map((lv,i)=>{
+      const d = data[lv.key];
+      const id = 'ec'+Date.now()+i;
+      return `<div class="r-card${lv.cls==='wow'?' highlight':''}">
+        <div class="r-card-top">
+          <span class="r-level ${lv.cls}">${lv.label}</span>
+          <div class="r-actions">
+            <button class="r-copy-btn" id="cp${id}" onclick="copyText(this,'${esc(d.bullet)}')">${copyIcon()} Copy</button>
+            <button class="r-save-btn" id="sv${id}" onclick="saveBtn(this,'${esc(d.bullet)}','experience')">${saveIcon()} Save</button>
+          </div>
+        </div>
+        <div class="r-body">
+          <div class="r-main">${esc(d.bullet)}</div>
+          <div class="r-explain"><strong>Tại sao:</strong> ${esc(d.explanation)}</div>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('exp-results').style.display='block';
+    document.getElementById('exp-time').textContent = nowStr();
+  } catch(e){ document.getElementById('exp-err').classList.add('show'); }
+  finally { setLoading('exp',false); }
+}
+
+// ===== HEADLINE =====
+async function runHeadline(){
+  const input = document.getElementById('hl-input').value.trim();
+  if(!input) return;
+  const role = document.getElementById('hl-role').value;
+  const tone = document.getElementById('hl-tone').value;
+  setLoading('hl',true);
+  document.getElementById('hl-err').classList.remove('show');
+  try {
+    const data = await callAPI(`LinkedIn Headline expert. Vietnamese Gen Z user.
+Input: "${input}", Target role: ${role||'unspecified'}, Tone: ${tone}
+Generate 3 distinct LinkedIn headline variants. Max 220 chars each. Must be attention-grabbing for recruiters.
+Return ONLY JSON:
+{"v1":{"headline":"...","style":"label for this style","why":"ngắn gọn tiếng Việt tại sao headline này hiệu quả"},"v2":{...},"v3":{...}}`);
+    const cards = document.getElementById('hl-cards');
+    cards.innerHTML = ['v1','v2','v3'].map((v,i)=>{
+      const d = data[v];
+      const id='hl'+Date.now()+i;
+      return `<div class="r-card">
+        <div class="r-card-top">
+          <span class="r-level pro">${esc(d.style||'Variant '+(i+1))}</span>
+          <div class="r-actions">
+            <button class="r-copy-btn" id="cp${id}" onclick="copyText(this,'${esc(d.headline)}')">${copyIcon()} Copy</button>
+            <button class="r-save-btn" id="sv${id}" onclick="saveBtn(this,'${esc(d.headline)}','headline')">${saveIcon()} Save</button>
+          </div>
+        </div>
+        <div class="r-body">
+          <div class="r-main">${esc(d.headline)}</div>
+          <div class="r-explain"><strong>Tại sao hiệu quả:</strong> ${esc(d.why)}</div>
+        </div>
+      </div>`;
+    }).join('');
+    document.getElementById('hl-results').style.display='block';
+    document.getElementById('hl-time').textContent = nowStr();
+  } catch(e){ document.getElementById('hl-err').classList.add('show'); }
+  finally{ setLoading('hl',false); }
+}
+
+// ===== ABOUT =====
+async function runAbout(){
+  const input = document.getElementById('ab-input').value.trim();
+  if(!input) return;
+  const goal = document.getElementById('ab-goal').value;
+  const length = document.getElementById('ab-length').value;
+  const words = {short:100,medium:180,long:280}[length];
+  setLoading('ab',true);
+  document.getElementById('ab-err').classList.remove('show');
+  try {
+    const data = await callAPI(`LinkedIn About section writer for Vietnamese Gen Z.
+User info: "${input}", Goal: ${goal||'find a job'}, Length: ~${words} words.
+Write a compelling LinkedIn About section in English. First-person, warm but professional tone. 
+End with a clear call to action.
+Return ONLY JSON: {"about":"the full about section text","tips":["tip1 in Vietnamese","tip2","tip3"]}`);
+    const id='ab'+Date.now();
+    document.getElementById('ab-cards').innerHTML = `
+      <div class="r-single" id="${id}">
+        <div class="r-single-top">
+          <span class="r-single-label">About Section</span>
+          <div class="r-actions">
+            <button class="r-copy-btn" id="cp${id}" onclick="copyText(this,document.getElementById('abt${id}').textContent)">${copyIcon()} Copy all</button>
+            <button class="r-save-btn" id="sv${id}" onclick="saveBtn(this,document.getElementById('abt${id}').textContent,'about')">${saveIcon()} Save</button>
+          </div>
+        </div>
+        <div class="r-single-body" id="abt${id}">${esc(data.about)}</div>
+        ${data.tips ? `<div class="tips-row">${data.tips.map(t=>`<span class="tip-chip">💡 ${esc(t)}</span>`).join('')}</div>` : ''}
+      </div>`;
+    document.getElementById('ab-results').style.display='block';
+  } catch(e){ document.getElementById('ab-err').classList.add('show'); }
+  finally{ setLoading('ab',false); }
+}
+
+// ===== SKILLS =====
+async function runSkills(){
+  const input = document.getElementById('sk-input').value.trim();
+  if(!input) return;
+  const role = document.getElementById('sk-role').value;
+  const industry = document.getElementById('sk-industry').value;
+  setLoading('sk',true);
+  document.getElementById('sk-err').classList.remove('show');
+  try {
+    const data = await callAPI(`LinkedIn Skills optimizer for Vietnamese Gen Z.
+Raw skills: "${input}", Target role: ${role||'unspecified'}, Industry: ${industry||'unspecified'}.
+Categorize and optimize these skills for LinkedIn. Remove vague/weak ones. Add relevant ATS keywords.
+Return ONLY JSON:
+{
+  "topSkills": ["skill1","skill2","skill3","skill4","skill5"],
+  "technical": ["..."],
+  "soft": ["..."],
+  "removed": [{"skill":"...", "reason":"tiếng Việt ngắn gọn tại sao bỏ"}],
+  "added": [{"skill":"...", "reason":"tiếng Việt ngắn gọn tại sao thêm vào"}],
+  "summary": "tiếng Việt 2 câu nhận xét tổng quan về skill set"
+}`);
+    const id='sk'+Date.now();
+    document.getElementById('sk-cards').innerHTML = `
+      <div class="r-single">
+        <div class="r-single-top">
+          <span class="r-single-label">⭐ Top 5 Skills — Đặt lên đầu LinkedIn</span>
+          <button class="r-copy-btn" onclick="copyText(this,'${esc(data.topSkills.join(', '))}')"> ${copyIcon()} Copy</button>
+        </div>
+        <div class="r-single-body" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+          ${data.topSkills.map(s=>`<span style="background:rgba(10,102,194,0.12);color:#60a5fa;padding:5px 12px;border-radius:6px;font-size:0.82rem;font-weight:600">${esc(s)}</span>`).join('')}
+        </div>
+        ${data.technical?.length ? `<div style="margin-bottom:12px"><div class="r-explain" style="margin-bottom:8px"><strong>Technical:</strong></div><div style="display:flex;flex-wrap:wrap;gap:6px">${data.technical.map(s=>`<span style="background:var(--surface2);color:var(--text2);padding:4px 10px;border-radius:5px;font-size:0.78rem">${esc(s)}</span>`).join('')}</div></div>`:''}
+        ${data.soft?.length ? `<div style="margin-bottom:12px"><div class="r-explain" style="margin-bottom:8px"><strong>Soft skills:</strong></div><div style="display:flex;flex-wrap:wrap;gap:6px">${data.soft.map(s=>`<span style="background:var(--surface2);color:var(--text2);padding:4px 10px;border-radius:5px;font-size:0.78rem">${esc(s)}</span>`).join('')}</div></div>`:''}
+        ${data.removed?.length ? `<div style="margin-bottom:10px"><div class="r-explain"><strong>❌ Đã bỏ:</strong> ${data.removed.map(r=>`${esc(r.skill)} (${esc(r.reason)})`).join(' · ')}</div></div>`:''}
+        ${data.added?.length ? `<div style="margin-bottom:10px"><div class="r-explain"><strong>✦ Thêm vào:</strong> ${data.added.map(r=>`${esc(r.skill)} (${esc(r.reason)})`).join(' · ')}</div></div>`:''}
+        ${data.summary ? `<div class="r-explain" style="margin-top:12px"><strong>Nhận xét:</strong> ${esc(data.summary)}</div>`:''}
+      </div>`;
+    document.getElementById('sk-results').style.display='block';
+  } catch(e){ document.getElementById('sk-err').classList.add('show'); }
+  finally{ setLoading('sk',false); }
+}
+
+// ===== COLD DM =====
+async function runDM(){
+  const input = document.getElementById('dm-input').value.trim();
+  if(!input) return;
+  const purpose = document.getElementById('dm-purpose').value;
+  const company = document.getElementById('dm-company').value;
+  setLoading('dm',true);
+  document.getElementById('dm-err').classList.remove('show');
+  try {
+    const data = await callAPI(`LinkedIn Cold DM writer for Vietnamese Gen Z.
+Situation: "${input}", Purpose: ${purpose}, Target company: ${company||'unspecified'}.
+Write 2 LinkedIn DM variants: one concise (under 80 words) and one detailed (under 150 words).
+Both must be in English, natural, not cringe, with a clear ask.
+Return ONLY JSON:
+{
+  "short":{"message":"...","why":"tiếng Việt 1 câu tại sao version này tốt"},
+  "detailed":{"message":"...","why":"tiếng Việt 1 câu tại sao version này tốt"},
+  "tips":["tip1 tiếng Việt","tip2","tip3"]
+}`);
+    const cards = document.getElementById('dm-cards');
+    cards.innerHTML = [
+      {key:'short',label:'Concise',sub:'<80 words — khuyên dùng',cls:'pro'},
+      {key:'detailed',label:'Detailed',sub:'<150 words',cls:'basic'},
+    ].map((v,i)=>{
+      const d = data[v.key];
+      const id='dm'+Date.now()+i;
+      return `<div class="r-card${v.cls==='pro'?' highlight':''}">
+        <div class="r-card-top">
+          <span class="r-level ${v.cls}">${v.label} · ${v.sub}</span>
+          <div class="r-actions">
+            <button class="r-copy-btn" id="cp${id}" onclick="copyText(this,'${esc(d.message)}')">${copyIcon()} Copy</button>
+            <button class="r-save-btn" id="sv${id}" onclick="saveBtn(this,'${esc(d.message)}','dm')">${saveIcon()} Save</button>
+          </div>
+        </div>
+        <div class="r-body">
+          <div style="font-size:0.9rem;line-height:1.75;color:var(--text);white-space:pre-wrap;margin-bottom:10px">${esc(d.message)}</div>
+          <div class="r-explain"><strong>Tại sao dùng:</strong> ${esc(d.why)}</div>
+        </div>
+      </div>`;
+    }).join('') +
+    (data.tips ? `<div class="tips-row">${data.tips.map(t=>`<span class="tip-chip">💡 ${esc(t)}</span>`).join('')}</div>` : '');
+    document.getElementById('dm-results').style.display='block';
+  } catch(e){ document.getElementById('dm-err').classList.add('show'); }
+  finally{ setLoading('dm',false); }
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCount(id, target, suffix){
+  const el = document.getElementById(id);
+  if(!el) return;
+  let n=0; const step = Math.ceil(target/40);
+  const t = setInterval(()=>{
+    n = Math.min(n+step, target);
+    el.innerHTML = n+(suffix||'');
+    if(n>=target) clearInterval(t);
+  }, 30);
+}
+setTimeout(()=>{
+  animateCount('cnt1','1.2k+');
+  animateCount('cnt2','8.4k+');
+  animateCount('cnt3','3x');
+},600);
+</script>
+</body>
+</html>
