@@ -1,3 +1,9 @@
+export async function onRequestGet() {
+  return new Response("API is working. Use POST to send messages.", {
+    status: 200,
+  });
+}
+
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json();
